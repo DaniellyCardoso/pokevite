@@ -4,9 +4,9 @@ const pokemon = defineProps(["name", "urlBaseSvg"])
 </script>
 
 <template>
-    <div class="col-4 ">
+    <div class="col-4 col-md-6 col-lg-3">
         <div class="card p-2 mb-3 cardListPokemon text-black " >
-            <p class="text-center">{{ pokemon.name }}</p>
+            <p class="text-center "><strong>{{ pokemon.name }}</strong></p>
             <img :src="pokemon.urlBaseSvg" class="card-img-top" alt="" height="80" />
         </div>
     </div>
@@ -25,5 +25,8 @@ const pokemon = defineProps(["name", "urlBaseSvg"])
 }
 .cardListPokemon img:hover {
     padding: .1rem;
+}
+p::first-letter{
+    text-transform: uppercase;
 }
 </style>

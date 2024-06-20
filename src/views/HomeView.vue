@@ -15,25 +15,25 @@ onMounted(() => {
     .then(res => res.json())
     .then(res => pokemons.value = res.results);
 })
- 
-const pokemonsFiltered = computed(()=>{
-  if(pokemons.value && searchPokemonField.value){
-    return pokemons.value.filter(pokemon=>
+
+const pokemonsFiltered = computed(() => {
+  if (pokemons.value && searchPokemonField.value) {
+    return pokemons.value.filter(pokemon =>
       pokemon.name.toLowerCase().startsWith(searchPokemonField.value.toLowerCase())
     )
   }
   return pokemons.value
-})  
+})
 
 const selectPokemon = async (pokemon) => {
   loading.value = true;
   await fetch(pokemon.url)
-  .then(res => res.json())
-  .then(res => pokemonSelected.value = res)
-  .catch(err => alert(err))
-  .finally(()=>{
-    loading.value = false;
-  })
+    .then(res => res.json())
+    .then(res => pokemonSelected.value = res)
+    .catch(err => alert(err))
+    .finally(() => {
+      loading.value = false;
+    })
 
   console.log(pokemonSelected.value)
 }
@@ -44,21 +44,19 @@ const selectPokemon = async (pokemon) => {
     <div class="container">
       <div class="row mt-4 ">
         <div class="col-sm-12 col-md-6 ">
-          <CardPokemonSelected 
-          :name="pokemonSelected?.name"
-          :xp="pokemonSelected?.base_experience"
-          :height="pokemonSelected?.height"
-          :img="pokemonSelected?.sprites?.other?.dream_world?.front_default"
-          :loading="loading"/>
+          <CardPokemonSelected :name="pokemonSelected?.name" :xp="pokemonSelected?.base_experience"
+            :height="pokemonSelected?.height" :img="pokemonSelected?.sprites?.other?.dream_world?.front_default"
+            :loading="loading" />
         </div>
 
         <div class="col-sm-6 ">
           <div class="card card-list">
             <div id="cardBody" class="card-body row">
-              
+
               <div class="mb-3">
                 <label hidden for="searchPokemonField" class="form-label ">Pesquisar...</label>
-                <input v-model="searchPokemonField" type="text" class="form-control  bg-primary-subtle" id="searchPokemonField" placeholder="Pesquisar...">
+                <input v-model="searchPokemonField" type="text" class="form-control  bg-primary-subtle"
+                  id="searchPokemonField" placeholder="Pesquisar...">
               </div>
 
               <ListPokemons v-for="pokemon in pokemonsFiltered" :key="pokemon.name" :name="pokemon.name"
@@ -74,14 +72,19 @@ const selectPokemon = async (pokemon) => {
 </template>
 
 <style scoped>
-  .card-list{
-    max-height: 75vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
+.card-list {
+  max-height: 75vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .card-list {
+    max-height: 44vh;
   }
-  #cardBody{
-    background-color: #0D0C57;
-  }
-  
-  
+}
+
+#cardBody {
+  background-color: #0D0C57;
+}
 </style>
